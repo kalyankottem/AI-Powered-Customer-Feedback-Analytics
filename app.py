@@ -304,6 +304,8 @@ if st.session_state.page == "predict":
 
             "Amazing experience and very fast service!",
 
+            "The app crashes frequently during payments.",
+
             "Loved the interface and overall user experience."
         ]
 
@@ -354,7 +356,7 @@ if st.session_state.page == "predict":
 
                 st.markdown(
                     f"""
-                    <div style="
+                    <div style='
                     padding:1.5rem;
                     border-radius:24px;
                     background:linear-gradient(
@@ -367,7 +369,7 @@ if st.session_state.page == "predict":
                     font-size:1.5rem;
                     font-weight:700;
                     margin-bottom:1rem;
-                    ">
+                    '>
 
                     {prediction}
 
@@ -396,10 +398,33 @@ if st.session_state.page == "predict":
                 )
 
                 fig_prob.update_layout(
+
+                    title=dict(
+                        text="Live Prediction Probability Analysis",
+                        x=0.5,
+                        xanchor='center',
+                        font=dict(
+                            size=20,
+                            color='white'
+                        )
+                    ),
+
                     paper_bgcolor='rgba(0,0,0,0)',
+
                     plot_bgcolor='rgba(15,23,42,0.35)',
-                    font=dict(color='white', size=13),
-                    margin=dict(l=20, r=20, t=40, b=20),
+
+                    font=dict(
+                        color='white',
+                        size=13
+                    ),
+
+                    margin=dict(
+                        l=20,
+                        r=20,
+                        t=80,
+                        b=20
+                    ),
+
                     height=360
                 )
 
@@ -408,7 +433,9 @@ if st.session_state.page == "predict":
                     use_container_width=True
                 )
 
+                # =========================================
                 # BUSINESS RECOMMENDATIONS
+                # =========================================
                 if prediction == "Complaint":
 
                     recommendation_color = "#ff4d6d"
@@ -458,7 +485,7 @@ if st.session_state.page == "predict":
                     """
 
                 recommendation_html = f"""
-                <div style="
+                <div style='
                 padding:1.4rem;
                 border-radius:24px;
                 background:linear-gradient(
@@ -471,23 +498,23 @@ if st.session_state.page == "predict":
                 margin-top:1rem;
                 line-height:1.9;
                 box-shadow:0 10px 30px rgba(0,0,0,0.25);
-                ">
+                '>
 
-                <div style="
+                <div style='
                 font-size:1.2rem;
                 font-weight:700;
                 margin-bottom:0.8rem;
                 color:{recommendation_color};
-                ">
+                '>
 
                 {recommendation_title}
 
                 </div>
 
-                <div style="
+                <div style='
                 color:#e2e8f0;
                 font-size:0.96rem;
-                ">
+                '>
 
                 {recommendation_text}
 
@@ -568,8 +595,9 @@ elif st.session_state.page == "bulk":
                 bulk_vec
             )
 
-
+            # =========================================
             # KPI ROW
+            # =========================================
             m1, m2, m3, m4 = st.columns(4)
 
             m1.metric(
@@ -592,7 +620,14 @@ elif st.session_state.page == "bulk":
                 (bulk_df["Predicted_Label"] == "Praise").sum()
             )
 
+            st.markdown(
+                "<div style='height:1rem'></div>",
+                unsafe_allow_html=True
+            )
+
+            # =========================================
             # CHARTS
+            # =========================================
             g1, g2 = st.columns(2)
 
             with g1:
@@ -611,10 +646,33 @@ elif st.session_state.page == "bulk":
                 )
 
                 fig_pie.update_layout(
+
+                    title=dict(
+                        text="Customer Sentiment Distribution",
+                        x=0.5,
+                        xanchor='center',
+                        font=dict(
+                            size=20,
+                            color='white'
+                        )
+                    ),
+
                     paper_bgcolor='rgba(0,0,0,0)',
+
                     plot_bgcolor='rgba(15,23,42,0.35)',
-                    font=dict(color='white', size=13),
-                    margin=dict(l=20, r=20, t=40, b=20),
+
+                    font=dict(
+                        color='white',
+                        size=13
+                    ),
+
+                    margin=dict(
+                        l=20,
+                        r=20,
+                        t=80,
+                        b=20
+                    ),
+
                     height=360
                 )
 
@@ -651,10 +709,33 @@ elif st.session_state.page == "bulk":
                 )
 
                 fig_bar.update_layout(
+
+                    title=dict(
+                        text="Customer Feedback Category Analysis",
+                        x=0.5,
+                        xanchor='center',
+                        font=dict(
+                            size=20,
+                            color='white'
+                        )
+                    ),
+
                     paper_bgcolor='rgba(0,0,0,0)',
+
                     plot_bgcolor='rgba(15,23,42,0.35)',
-                    font=dict(color='white', size=13),
-                    margin=dict(l=20, r=20, t=40, b=20),
+
+                    font=dict(
+                        color='white',
+                        size=13
+                    ),
+
+                    margin=dict(
+                        l=20,
+                        r=20,
+                        t=80,
+                        b=20
+                    ),
+
                     height=360
                 )
 
@@ -663,7 +744,14 @@ elif st.session_state.page == "bulk":
                     use_container_width=True
                 )
 
+            st.markdown(
+                "<div style='height:1rem'></div>",
+                unsafe_allow_html=True
+            )
+
+            # =========================================
             # TABLE
+            # =========================================
             display_df = bulk_df.copy()
 
             display_df.columns = [
@@ -671,7 +759,9 @@ elif st.session_state.page == "bulk":
                 for col in display_df.columns
             ]
 
-            st.markdown("### Processed Customer Feedback")
+            st.markdown(
+                "### Processed Customer Feedback"
+            )
 
             st.dataframe(
                 display_df,
@@ -705,28 +795,93 @@ elif st.session_state.page == "insights":
 
     report_df = pd.DataFrame(report).transpose()
 
-    # KPI ROW
+    # =========================================
+    # ANIMATED KPI ROW
+    # =========================================
     m1, m2, m3, m4 = st.columns(4)
 
-    m1.metric(
-        "Accuracy",
-        f"{accuracy:.2%}"
+    accuracy_percent = accuracy * 100
+    training_samples = len(train_df)
+    class_count = len(model.classes_)
+    feature_count = len(
+        vectorizer.get_feature_names_out()
     )
 
-    m2.metric(
-        "Training Samples",
-        len(train_df)
-    )
+    with m1:
 
-    m3.metric(
-        "Classes",
-        len(model.classes_)
-    )
+        acc_placeholder = st.empty()
 
-    m4.metric(
-        "TF-IDF Features",
-        len(vectorizer.get_feature_names_out())
-    )
+        for i in np.linspace(
+            0,
+            accuracy_percent,
+            35
+        ):
+
+            acc_placeholder.metric(
+                "Accuracy",
+                f"{i:.2f}%"
+            )
+
+            time.sleep(0.01)
+
+    with m2:
+
+        sample_placeholder = st.empty()
+
+        for i in range(
+            0,
+            training_samples + 1,
+            max(1, training_samples // 30)
+        ):
+
+            sample_placeholder.metric(
+                "Training Samples",
+                i
+            )
+
+            time.sleep(0.005)
+
+        sample_placeholder.metric(
+            "Training Samples",
+            training_samples
+        )
+
+    with m3:
+
+        class_placeholder = st.empty()
+
+        for i in range(1, class_count + 1):
+
+            class_placeholder.metric(
+                "Classes",
+                i
+            )
+
+            time.sleep(0.08)
+
+    with m4:
+
+        feature_placeholder = st.empty()
+
+        animated_steps = np.linspace(
+            0,
+            feature_count,
+            40
+        )
+
+        for i in animated_steps:
+
+            feature_placeholder.metric(
+                "TF-IDF Features",
+                int(i)
+            )
+
+            time.sleep(0.008)
+
+        feature_placeholder.metric(
+            "TF-IDF Features",
+            feature_count
+        )
 
     st.markdown(
         "<div style='height:1.5rem'></div>",
@@ -829,10 +984,33 @@ elif st.session_state.page == "insights":
         )
 
         fig_dist.update_layout(
+
+            title=dict(
+                text="Training Dataset Distribution",
+                x=0.5,
+                xanchor='center',
+                font=dict(
+                    size=20,
+                    color='white'
+                )
+            ),
+
             paper_bgcolor='rgba(0,0,0,0)',
+
             plot_bgcolor='rgba(15,23,42,0.35)',
-            font=dict(color='white', size=13),
-            margin=dict(l=20, r=20, t=40, b=20),
+
+            font=dict(
+                color='white',
+                size=13
+            ),
+
+            margin=dict(
+                l=20,
+                r=20,
+                t=80,
+                b=20
+            ),
+
             height=360
         )
 
